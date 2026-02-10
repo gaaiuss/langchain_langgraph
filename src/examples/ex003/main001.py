@@ -5,44 +5,45 @@ from langgraph.graph import StateGraph
 from rich import print
 
 
-# 1 - Define state
+# Define node state
 class State(TypedDict):
     nodes_path: Annotated[list[str], operator.add]
 
 
-# 2 - Define nodes
-def a_node(state: State) -> State:
+# Define the nodes
+def node_a(state: State) -> State:
     output_state: State = {"nodes_path": ["A"]}
-    print("> a_node", f"{state=}", f"{output_state=}")
+    print("> node_a", f"{state=}", f"{output_state=}")
     return output_state
 
 
-def b_node(state: State) -> State:
+def node_b(state: State) -> State:
     output_state: State = {"nodes_path": ["B"]}
-    print("> b_node", f"{state=}", f"{output_state=}")
+    print("> node_b", f"{state=}", f"{output_state=}")
     return output_state
 
 
-# 3 - Graph builder
+# Define graph builder
 builder = StateGraph(State)
 
-builder.add_node("A", a_node)
-builder.add_node("B", b_node)
+builder.add_node("A", node_a)
+builder.add_node("B", node_b)
 
-# 4 - Connect edges
+# Connect edges
 builder.add_edge("__start__", "A")
 builder.add_edge("A", "B")
 builder.add_edge("B", "__end__")
 
-# 5 - Compile graph
+# Compile graph
 graph = builder.compile()
 
-# graph.get_graph().draw_mermaid_png(output_file_path="file.png")
-# print(graph.get_graph().draw_mermaid()) # another option to see the graph
+# See the graph
+# graph.get_graph().draw_mermaid_png(output_file_path="graph.png")
 
 # Get result
 response = graph.invoke({"nodes_path": []})
 
+# Get all the result
 print()
 print(f"{response=}")
 print()
