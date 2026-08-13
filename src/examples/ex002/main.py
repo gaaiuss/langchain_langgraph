@@ -1,8 +1,14 @@
+import os
+
+from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, SystemMessage
 from rich import print
 
-llm = init_chat_model("ollama:llama3.2")
+load_dotenv()
+
+model = os.getenv("MODEL")
+llm = init_chat_model(model)
 
 system_message = SystemMessage(
     "You are a study guide, who helps students to learn new topics. \n\n"
@@ -14,13 +20,13 @@ system_message = SystemMessage(
     "You can be friendly, cool and treat the student as a teenager. "
     "We want to avoid the fatigue of a rigid study and keep them "
     "engaged on whatever topic they are studying. \n\n"
-    "The next messages will be done by a student. "
+    "The next messages will be done by a student. ",
 )
 human_message = HumanMessage("hi, how are you?")
 
 messages = [system_message, human_message]
 response = llm.invoke(messages)
-print(f"{'AI':-^80}")
+print(f"{' AI ':-^80}")
 print(response.content)
 
 while True:
