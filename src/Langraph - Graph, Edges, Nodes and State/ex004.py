@@ -45,7 +45,9 @@ builder.add_node("C", node_c)
 
 builder.add_edge("__start__", "A")
 builder.add_conditional_edges(
-    "A", the_conditional, {"goes_to_b": "B", "goes_to_c": "C"}
+    "A",
+    the_conditional,
+    {"goes_to_b": "B", "goes_to_c": "C"},
 )
 builder.add_edge("B", "__end__")
 builder.add_edge("C", "__end__")
