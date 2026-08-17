@@ -1,3 +1,6 @@
+# Project
+*.png
+
 .DS_Store
 db.json
 
