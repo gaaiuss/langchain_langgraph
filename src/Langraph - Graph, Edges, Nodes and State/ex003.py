@@ -98,11 +98,11 @@ graph = builder.compile()
 
 """
 The invoke function needs the state, in this example we need to follow the
-State(TypedDict) signature, in other words, we need a `nodes_path: list[str]` as
-the type of state the the invoke function needs. 
+State(TypedDict) signature, in other words, we need a `nodes_path: list[str]`
+as the type of state the the invoke function needs.
 
-You can use the class State, created before or you can pass the dictionary following
-the `nodes_path: list[str]` signature.
+You can use the class State, created before or you can pass the dictionary
+following the `nodes_path: list[str]` signature.
 """
 # response = graph.invoke("Send message") # Wrong
 
