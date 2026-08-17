@@ -1,49 +1,40 @@
-import operator
-from typing import Annotated, TypedDict
+"""Langgraph
 
-from langgraph.graph import StateGraph
-from rich import print
+For more complex applications, which demands back to back or execute and return
+to a previous step, we use the graphs models.
+
+Instead of chain calls in a hard applicated way, we work as a graph format.
+This means that we use nodes conected by edges.
+
+Nodes: functions that executes certain single actions (LLM call for example).
+Edges: determine which node will be executed next. They can also be conditional.
+
+When creating a new graph project, it is for the best pratice to write down the
+nodes and edges on a other source than just writing code without thinking or
+how the graph will look like.
+
+Template builder: build.langchain.com
+
+Minimum requirements to create a Graph:
+    - State: defines the graph state, which will be the entire data structure that
+    will be used in the entire graph (It can be a TypedDict, a dataclass or a
+    Pydantic model).
+    - Nodes: functions that receive the state as an input, execute actions and
+    return the updated state.
+    - Edges: node conections that can be simple or conditional.
+"""
+
+from typing import TypedDict
 
 
-# 1. Define node state typing (TypedDict)
+# 1. Define node state (TypedDict or dataclass)
 class State(TypedDict):
-    nodes_path: Annotated[list[str], operator.add]
+    # for each node executed, it will store the path in a list[str]
+    nodes_path: list[str]
 
 
-# 2. Define the nodes
-def node_a(state: State) -> State:
-    output_state: State = {"nodes_path": ["A"]}
-    print("> node_a", f"{state=}", f"{output_state=}")
-    return output_state
+# 2. Create the nodes
+def node_a(state: State) -> State: ...
 
 
-def node_b(state: State) -> State:
-    output_state: State = {"nodes_path": ["B"]}
-    print("> node_b", f"{state=}", f"{output_state=}")
-    return output_state
-
-
-# 3. Define graph builder
-builder = StateGraph(State)
-
-builder.add_node("A", node_a)
-builder.add_node("B", node_b)
-
-# 4. Connect edges
-builder.add_edge("__start__", "A")
-builder.add_edge("A", "B")
-builder.add_edge("B", "__end__")
-
-# 5. Compile graph
-graph = builder.compile()
-
-# See the graph
-# graph.get_graph().draw_mermaid_png(output_file_path="graph.png")
-
-# 6. Get result
-response = graph.invoke({"nodes_path": []})
-
-# Get all the result
-print()
-print(f"{response=}")
-print()
+def node_b(state: State) -> State: ...
