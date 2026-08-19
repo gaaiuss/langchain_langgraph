@@ -16,9 +16,14 @@ import os
 
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
-from langchain.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
 from langchain.tools import BaseTool, tool
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import (
+    AIMessage,
+    BaseMessage,
+    HumanMessage,
+    SystemMessage,
+    ToolMessage,
+)
 from pydantic import ValidationError
 from rich import print
 from rich.markdown import Markdown
