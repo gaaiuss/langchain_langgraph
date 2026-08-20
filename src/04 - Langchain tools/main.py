@@ -15,7 +15,6 @@ return bak to the llm.
 import os
 
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
 from langchain.tools import BaseTool, tool
 from langchain_core.messages import (
     AIMessage,
@@ -24,6 +23,7 @@ from langchain_core.messages import (
     SystemMessage,
     ToolMessage,
 )
+from langchain_ollama import ChatOllama
 from pydantic import ValidationError
 from rich import print
 from rich.markdown import Markdown
@@ -53,8 +53,8 @@ print(Markdown("---"))
 # print(result)
 
 load_dotenv()
-model = os.getenv("MODEL")
-llm = init_chat_model(model)
+model = os.getenv("MODEL", "Model not found. Check you `.env` file.")
+llm = ChatOllama(model=model)
 
 system_message = SystemMessage(
     "You are an assistant. You have access to tools. When the user asks "

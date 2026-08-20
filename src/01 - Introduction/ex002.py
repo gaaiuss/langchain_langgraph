@@ -1,14 +1,14 @@
 import os
 
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_ollama import ChatOllama
 from rich import print
 
 load_dotenv()
 
-model = os.getenv("MODEL")
-llm = init_chat_model(model)
+model = os.getenv("MODEL", "Model not found. Check you `.env` file.")
+llm = ChatOllama(model=model)
 
 system_message = SystemMessage(
     "You are a study guide, who helps students to learn new topics. \n\n"

@@ -17,9 +17,9 @@ from typing import Annotated, TypedDict
 from unittest import result
 
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage
 from langchain_core.messages import BaseMessage
+from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph, add_messages
 from langgraph.graph.state import RunnableConfig
@@ -29,8 +29,8 @@ from rich.markdown import Markdown
 load_dotenv()
 
 # For now we will create a global llm variable for simplicity purposes
-model = os.getenv("MODEL")
-llm = init_chat_model(model)
+model = os.getenv("MODEL", "Model not found. Check you `.env` file.")
+llm = ChatOllama(model=model)
 
 
 # 1. Define state
