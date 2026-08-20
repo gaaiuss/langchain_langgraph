@@ -1,4 +1,4 @@
-from langchain.tools import tool
+from langchain.tools import BaseTool, tool
 
 
 @tool
@@ -55,3 +55,7 @@ def sub_(a: float, b: float) -> float:
         the resulting float of the equation a - b
     """
     return a - b
+
+
+TOOLS: list[BaseTool] = [multiply, divide, sum_, sub_]
+TOOLS_BY_NAME: dict[str, BaseTool] = {tool.name: tool for tool in TOOLS}

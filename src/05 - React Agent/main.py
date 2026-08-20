@@ -8,7 +8,7 @@ def main() -> None:
     config = RunnableConfig(configurable={"thread_id": 1})
     graph = build_graph()
 
-    user_input = "Hello, my name is Caio."
+    user_input = "Hello, my name is Caio. Can you tell me how much is 10 / 2.5?"
     human_message = HumanMessage(user_input)
 
     message_history = [human_message]
